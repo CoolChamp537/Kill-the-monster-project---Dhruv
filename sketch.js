@@ -1,0 +1,76 @@
+const Engine = Matter.Engine;
+const World = Matter.World;
+const Bodies = Matter.Bodies;
+const Constraint = Matter.Constraint;
+
+var engine, world;
+var box1, box2, box3,box4;
+var hero,monster,rope,ground;
+
+function preload() {
+  bg = loadImage("gamingbackground2.png");
+}
+
+function setup() {
+  createCanvas(1500, 700);
+  engine = Engine.create();
+  world = engine.world;
+
+  ground = new Ground(600, 600, 1200, 20);
+
+  hero = new Hero(400,800,500,200);
+  rope = new Rope(hero.body, {x: 500, y: 50});
+  monster = new Monster(1100,550,300);
+
+  box1 = new Box(600, 100, 70, 70);
+  box2 = new Box(900, 100, 70, 70);
+  box3 = new Box(900, 100, 70, 70);
+  box4 = new Box(900, 100, 70, 70);
+
+}
+
+function draw() {
+  background(bg);
+  Engine.update(engine);
+  ground.display();
+  box1.display();
+  box2.display();
+  box3.display();
+  box4.display()
+
+  hero.display();
+  rope.display();
+  monster.display();
+
+  if(monster.body.position.y > height){
+    fill("blue")
+    textAlign(CENTER)
+    textSize(80)
+    textFont("CALIBRI")
+    text("YOU WIN!",width/2,height/2 - 50)
+    text("PRESS 'Ctrl + R' TO RESTART!",width/2,height/2 + 50)
+
+    box1.Visibility = 0
+    box2.Visibility = 0
+    box3.Visibility = 0
+    box4.Visibility = 0
+    hero.Visibility = 0
+  }
+}
+
+function mouseDragged(){
+  Matter.Body.setPosition(hero.body,{x: mouseX,y: mouseY})
+}
+
+function mouseReleased(){
+  rope.fly()
+}
+
+function keyPressed(){
+
+  if(keyCode === 32){
+    Matter.Body.setPosition(hero.body,{x: 400,y: 800})
+    rope.attach(hero.body)
+    rope.bodyA 
+  }
+}
